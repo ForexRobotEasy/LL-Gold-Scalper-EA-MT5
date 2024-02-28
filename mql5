@@ -1,0 +1,85 @@
+mql5
+//+------------------------------------------------------------------+
+//|                                             LL Gold Scalper EA MT5|
+//|                                   https://www.forexroboteasy.com  |
+//|                                          Developed by Forex Robot Easy Team|
+//+------------------------------------------------------------------+
+
+// Include necessary libraries
+#include <Trade\Trade.mqh>
+#include <Timeseries\Timeseries.mqh>
+
+// Define trading parameters
+input double StopLoss = 50;            // Stop loss level in pips
+input double TakeProfit = 100;         // Take profit level in pips
+input double RiskPercentage = 2;       // Risk percentage per trade
+input double MaxPositions = 5;         // Maximum number of open positions
+
+//+------------------------------------------------------------------+
+//| Expert initialization function                                   |
+//+------------------------------------------------------------------+
+int OnInit()
+{
+    // Set trading parameters
+    Trade.SetStopLoss(StopLoss);
+    Trade.SetTakeProfit(TakeProfit);
+    Trade.SetRiskPercentage(RiskPercentage);
+    Trade.SetMaxPositions(MaxPositions);
+    
+    // Initialize Timeseries for market data analysis
+    TimeSeries.Initialize();
+    
+    return(INIT_SUCCEEDED);
+}
+
+//+------------------------------------------------------------------+
+//| Expert deinitialization function                                 |
+//+------------------------------------------------------------------+
+void OnDeinit(const int reason)
+{
+    // Deinitialize Timeseries
+    TimeSeries.Deinitialize();
+}
+
+//+------------------------------------------------------------------+
+//| Expert tick function                                             |
+//+------------------------------------------------------------------+
+void OnTick()
+{
+    // Check for trading opportunities
+    if (FindTradingOpportunity())
+    {
+        // Execute trade
+        ExecuteTrade();
+    }
+}
+
+//+------------------------------------------------------------------+
+//| Function to detect trading opportunities                          |
+//+------------------------------------------------------------------+
+bool FindTradingOpportunity()
+{
+    // Add your code here to analyze market data and identify trading opportunities
+    // Return true if a trading opportunity is found, otherwise return false
+}
+
+//+------------------------------------------------------------------+
+//| Function to execute trades instantly and automatically            |
+//+------------------------------------------------------------------+
+void ExecuteTrade()
+{
+    // Add your code here to execute trades on behalf of the trader
+}
+
+//+------------------------------------------------------------------+
+//| Expert start function                                            |
+//+------------------------------------------------------------------+
+void OnStart()
+{
+    // Run the expert advisor 24/7
+    while (!IsStopped())
+    {
+        OnTick();
+        Sleep(1000); // Sleep for 1 second before checking for the next tick
+    }
+}
